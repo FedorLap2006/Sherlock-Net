@@ -15,19 +15,20 @@ public:
 	std::vector<Neuron> neurons;
 	std::vector<double> topology;
 	std::vector<double> ltopology;
+	void FlushWeight();
 };
 
 class Net {
 private:
 	std::vector<Layer> layers;
-	std::vector<double> topology;
-	std::vector<double> ltopology;
+	/* std::vector<double> topology;
+	std::vector<double> ltopology; */
 	std::vector<INeuron> inputs;
 	double output;
 public:
 	Net();
 	Net(std::vector<double> input);
 	Net(std::vector<INeuron> input);
-	virtual void Study(double koff);
+	virtual void Study(int,double koff);
 	double getOutput() { return this->output; }
 };
