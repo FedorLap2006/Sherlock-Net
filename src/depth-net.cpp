@@ -3,8 +3,11 @@
 
 #include "pch.h"
 #include <iostream>
+#include "Net.h"
 
 int main()
 {
-	std::cout << "hello network!";
+	std::vector<double> i = {1,2,3,4,5};
+	Net netw(i);
+	netw.Study(10, stdKoffLearn);
 }
