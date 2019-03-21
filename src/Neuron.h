@@ -5,31 +5,60 @@
 #include <cmath>
 #include <string>
 #include <vector>
+#include <memory>
 
 class Neuron;
 
-typedef struct Input {
-	Neuron* neuron;
-	double weight;
-}Input;
+#if __cplusplus < 199711L
+#error not supported compiller version ( C++11 )
+
+#elif defined( _MSC_VER )
+#endif
+
+struct {
+	void* data;
+	enum {
+		TINT,
+		TFLOAT,
+		TDOUBLE,
+	}type;
+	size_t size;
+}val_t;
+
+struct cmd_t {
+	enum {
+		TPLUS,
+		TMINUS,
+		TMUL,
+		TDIV,
+		TSEND
+	}kind;
+	
+//	int recvID = 0;
+
+	val_t* value = nullptr;
+};
+
+struct {
+	cmd_t cmd;
+	
+	Neuron* sender = nullptr;
+ 	Neuron* receiver = nullptr;
+//	double weight;
+}Link;
 
 class Neuron
 {
 protected:
-	double value;
+	
 public:
 	Neuron() = default;
-	Neuron(std::vector<Input> input);
-	virtual double getValue() { this->kernel(); return tanh(this->value); }
-	// virtual void setLvalue(double val) { this->lvalue; }
-	virtual void setWeight(int32_t num,double w);
-	virtual void setValue(double val) { this->value = val; }
-	virtual void setInput(std::vector<Input> input) { this->ins = input; }
+	Neuron(std::vector<Link> links);
 	virtual void kernel();
-
+	
 	~Neuron() = default;
 private:
-	std::vector<Input> ins;
+	std::vector<Link*> conns;
 	// double lvalue;
 
 };
